@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <button onclick="logInPage()">Go Back</button><br><br>
+        <button onclick="addEmployee()">Add Employee</button>
+        <div id="addEmployee" style="visibility: hidden;">
+            Employee Name <input type="text" name="empName" id="employeeName" required><br>
+            Password <input type="password" name="pass" id="password" required><br>
+            <button onclick="add()">Add</button>
+        </div>
+
+        <button onclick="source()">sources</button>
+        <div id="sources" style="visibility: hidden;">
+            Income Source <input type="text" name="incSource" id="incomeSource"><br>
+            Price <input type="text" name="price" id="incPrice">
+            <button onclick="addIncome()">Add Income</button>
+
+            <button onclick="checkBallance()">Check Ballance</button>
+        </div>
+
+
+    </div>
+</body>
+
+<script>
+
+    const companyName = localStorage.getItem("activeCompany");
+
+    function logInPage() {
+        window.location.href = "Test 19 sep 24.html"
+    }
+
+    const divEmployee = document.getElementById('addEmployee');
+    function addEmployee() {
+        divEmployee.style.visibility = "visible";
+    }
+
+    function add() {
+
+        const empName = document.getElementById('employeeName').value;
+        const pass = document.getElementById('password').value;
+
+        localStorage.setItem(companyName + empName, pass);
+        divEmployee.style.visibility = "hidden";
+    }
+
+    const title = localStorage.getItem(companyName + "expense");
+    const price = localStorage.getItem(title);
+
+    const sources = document.getElementById('sources');
+    function source() {
+
+        if (title.length > 0) {
+
+            const para = document.createElement('p');
+            para.textContent = title + "\t" + price;
+
+            const btn = document.createElement('btn');
+            btn.textContent = "verify";
+            btn.onclick = "verify()"
+
+            sources.appendChild(para);
+            sources.appendChild(btn);
+
+        }
+
+        sources.style.visibility = "visible";
+        divEmployee.style.visibility = "hidden";
+    }
+
+    function addIncome() {
+        const incomeSource = document.getElementById('incomeSource');
+        const incPrice = document.getElementById('incPrice');
+
+        localStorage.setItem(companyName + incomeSource, price);
+        localStorage.setItem(companyName + "ballance", localStorage.getItem(companyName + "ballance") + price);
+    }
+
+    function verify() {
+        localStorage.setItem(companyName + "expense", "");
+        localStorage.setItem(companyName + "ballance", localStorage.getItem(companyName + "ballance") - price);
+    }
+
+
+    function checkBallance() {
+
+        const ballancePara = document.createElement('p');
+        ballancePara.textContent = localStorage.getItem(companyName + "ballance");
+        sources.appendChild(ballancePara);
+    }
+</script>
+
+</html>

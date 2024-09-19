@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="logIn"
+            style="background-color: aqua; align-items: center; height: 400px; width: 300px; margin-left: 500px; margin-top: 150px; padding: 10px;">
+
+
+            <h1>Log In as</h1><br>
+            <button onclick="webOwner()">websiteOwner</button><button
+                onclick="companyOwner()">CompanyOwner</button><button onclick="employee()">Employee</button>
+
+            <div id="websiteOwnerDetail" style="visibility: hidden;">
+                Name <input type="text" name="name" id="webName" required><br>
+                Password <input type="password" name="pass" id="webPassword" required><br>
+                <button onclick="webLogIn()">Log In</button>
+            </div>
+            <div id="companyOwnerDetail" style="visibility: hidden;">
+                Company Name <input type="text" name="ownCmpName" id="ownerCompanyName" required><br>
+                Name <input type="text" name="ownName" id="ownerName" required><br>
+                Password <input type="password" name="ownPass" id="ownerPassword" required><br>
+                <button onclick="ownerLogIn()">Log In</button>
+            </div>
+            <div id="employeeDetail" style="visibility: hidden;">
+                Company Name <input type="text" name="empCmpName" id="employeeCompanyName" required><br>
+                Name <input type="text" name="empName" id="employeeName" required><br>
+                Password <input type="password" name="empName" id="employeePassword" required><br>
+                <button onclick="employeeLogIn()">Log In</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script>
+
+    const websiteOwnerDetail = document.getElementById('websiteOwnerDetail');
+    const companyOwnerDetail = document.getElementById('companyOwnerDetail');
+    const employeeDetail = document.getElementById('employeeDetail');
+
+    function webOwner() {
+        websiteOwnerDetail.style.visibility = "visible";
+        companyOwnerDetail.style.visibility = "hidden";
+        employeeDetail.style.visibility = "hidden";
+    }
+
+    function companyOwner() {
+        companyOwnerDetail.style.visibility = "visible";
+        websiteOwnerDetail.style.visibility = "hidden";
+        employeeDetail.style.visibility = "hidden";
+    }
+
+    function employee() {
+        employeeDetail.style.visibility = "visible";
+        companyOwnerDetail.style.visibility = "hidden";
+        websiteOwnerDetail.style.visibility = "hidden";
+    }
+
+    function webLogIn() {
+        const name = document.getElementById('webName').value;
+        const pass = document.getElementById('webPassword').value;
+
+        if (name == "Tayyab" && pass == "1234") {
+            window.location.href = "websiteOwner.html";
+        } else {
+            alert("Plz Check your name and password.");
+        }
+    }
+
+    function ownerLogIn() {
+        const company = document.getElementById('ownerCompanyName').value;
+        const name = document.getElementById('ownerName').value;
+        const pass = document.getElementById('ownerPassword').value;
+
+        const nam = localStorage.getItem(company);
+        const pas = localStorage.getItem(name);
+
+        if (nam == name && pas == pass) {
+            localStorage.setItem("activeCompany", company);
+            window.location.href = "companyOwner.html";
+        } else {
+            alert("Plz Check your name and password.");
+        }
+
+    }
+    localStorage.clear();
+    function employeeLogIn() {
+        const company = document.getElementById('employeeCompanyName').value;
+        const name = document.getElementById('employeeName').value;
+        const pass = document.getElementById('employeePassword').value;
+
+        const data = localStorage.getItem(company+name);
+
+        if (data == pass) {
+            localStorage.setItem("activeCompany", company);
+            window.location.href = "employee.html";
+        } else {
+            alert("Plz Check your name and password.");
+        } employee
+    }
+</script>
+
+</html>

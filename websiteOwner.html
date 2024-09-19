@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <button onclick="logInPage()">Go Back</button><br>
+        <button onclick="addCompany()">Add Company</button><br>
+        <div id="addCompany" style="visibility:hidden;">
+            Company Name <input type="text" name="cmpName" id="companyName" required> <br>
+            Owner Name <input type="text" name="ownName" id="ownerName" required> <br>
+            Password <input type="password" name="pass" id="password" required> <br>
+            <button onclick="add()">Add</button>
+        </div>
+
+        <button onclick="detail()">Check Details</button><br>
+        <div id="checkDetail" style="visibility: hidden;">
+            company Name <input type="text" name="detCmpName" id="showCompanyName" required><br>
+            <button onclick="show()">show</button>
+        </div>
+
+    </div>
+</body>
+<script>
+
+    function logInPage() {
+        window.location.href = "Test 19 sep 24.html"
+    }
+
+    const company = document.getElementById('addCompany');
+    function addCompany() {
+        company.style.visibility = "visible";
+        showCompany.style.visibility = "hidden";
+    }
+
+    function add() {
+        const companyName = document.getElementById('companyName').value;
+        const ownerName = document.getElementById('ownerName').value;
+        const password = document.getElementById('password').value;
+
+        localStorage.setItem(companyName,ownerName);
+        localStorage.setItem(companyName+"ballance",0);
+        localStorage.setItem(ownerName,password);
+
+        company.style.visibility = "hidden";
+    }
+
+
+    const showCompany = document.getElementById('checkDetail');
+    function detail() {
+        showCompany.style.visibility = "visible";
+        company.style.visibility = "hidden";
+    }
+
+    function show() {
+        const comName = document.getElementById('showCompanyName').value;
+        const ownerName = localStorage.getItem(comName);
+        const pass = localStorage.getItem(ownerName);
+        const ballance = localStorage.getItem(comName+ballance)
+        const para = document.createElement('p');
+
+        para.textContent = data;
+
+        const showDetail = document.getElementById('checkDetail');
+        showDetail.appendChild(para);
+
+    }
+</script>
+
+</html>

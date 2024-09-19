@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <button onclick="logInPage()">Go Back</button>
+        <div>
+            Expense Title <input type="text" name="expenseTitle" id="title" required><br>
+            Price <input type="text" name="price" id="price"><br>
+            <button onclick="addExpense()">Add Expense</button>
+        </div>
+
+    </div>
+</body>
+
+<script>
+
+    const companyName = localStorage.getItem("activeCompany");
+
+    function logInPage() {
+        window.location.href = "Test 19 sep 24.html"
+    }
+
+    function addExpense() {
+        const title = document.getElementById('title');
+        const price = document.getElementById('price');
+
+        if (localStorage.getItem(companyName + "expense").length >= 1) {
+            alert("Wait and submit later.")
+        } else {
+            localStorage.setItem(companyName + "expense", title);
+            localStorage.setItem(title, price);
+        }
+
+    }
+</script>
+
+</html>
