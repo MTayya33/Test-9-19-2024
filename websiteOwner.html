@@ -23,11 +23,14 @@
         <div id="checkDetail" style="visibility: hidden;">
             company Name <input type="text" name="detCmpName" id="showCompanyName" required><br>
             <button onclick="show()">show</button>
+
+            <p id="para"></p>
         </div>
 
     </div>
 </body>
 <script>
+
 
     function logInPage() {
         window.location.href = "Test 19 sep 24.html"
@@ -44,10 +47,19 @@
         const ownerName = document.getElementById('ownerName').value;
         const password = document.getElementById('password').value;
 
-        localStorage.setItem(companyName,ownerName);
-        localStorage.setItem(companyName+"ballance",0);
-        localStorage.setItem(ownerName,password);
 
+        const obj = {
+            ownerName: ownerName,
+            password: password,
+            ballance: 0,
+            employees: {},
+            income: {},
+            expenses: {},
+            pendingExpenses: {}
+        };
+
+        localStorage.setItem(companyName,JSON.stringify(obj));
+        console.log(obj);
         company.style.visibility = "hidden";
     }
 
@@ -60,12 +72,11 @@
 
     function show() {
         const comName = document.getElementById('showCompanyName').value;
-        const ownerName = localStorage.getItem(comName);
-        const pass = localStorage.getItem(ownerName);
-        const ballance = localStorage.getItem(comName+ballance)
-        const para = document.createElement('p');
+        const data = (localStorage.getItem(comName));
 
-        para.textContent = data;
+        console.log(data);
+
+        document.getElementById("para").innerHTML = data;
 
         const showDetail = document.getElementById('checkDetail');
         showDetail.appendChild(para);

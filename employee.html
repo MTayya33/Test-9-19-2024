@@ -23,6 +23,7 @@
 <script>
 
     const companyName = localStorage.getItem("activeCompany");
+    const data = localStorage.getItem(companyName);
 
     function logInPage() {
         window.location.href = "Test 19 sep 24.html"
@@ -32,12 +33,10 @@
         const title = document.getElementById('title');
         const price = document.getElementById('price');
 
-        if (localStorage.getItem(companyName + "expense").length >= 1) {
-            alert("Wait and submit later.")
-        } else {
-            localStorage.setItem(companyName + "expense", title);
-            localStorage.setItem(title, price);
-        }
+
+        data.pendingExpenses[title] = price;
+        localStorage.setItem(companyName, data);
+
 
     }
 </script>

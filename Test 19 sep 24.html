@@ -40,6 +40,7 @@
 </body>
 
 <script>
+    // localStorage.clear();
 
     const websiteOwnerDetail = document.getElementById('websiteOwnerDetail');
     const companyOwnerDetail = document.getElementById('companyOwnerDetail');
@@ -79,8 +80,11 @@
         const name = document.getElementById('ownerName').value;
         const pass = document.getElementById('ownerPassword').value;
 
-        const nam = localStorage.getItem(company);
-        const pas = localStorage.getItem(name);
+        const data =JSON.parse(localStorage.getItem(company));
+        console.log(data);
+        
+        const nam = data.ownerName;
+        const pas = data.password;
 
         if (nam == name && pas == pass) {
             localStorage.setItem("activeCompany", company);
@@ -96,9 +100,12 @@
         const name = document.getElementById('employeeName').value;
         const pass = document.getElementById('employeePassword').value;
 
-        const data = localStorage.getItem(company+name);
+        const data =JSON.parse(localStorage.getItem(company));
 
-        if (data == pass) {
+        const pas = data.employees[name];
+
+
+        if (pas == pass) {
             localStorage.setItem("activeCompany", company);
             window.location.href = "employee.html";
         } else {

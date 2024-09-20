@@ -20,10 +20,12 @@
 
         <button onclick="source()">sources</button>
         <div id="sources" style="visibility: hidden;">
-            Income Source <input type="text" name="incSource" id="incomeSource"><br>
+            Income Source <input type="text" name="incSource" id="incomeSource"><br><br>
             Price <input type="text" name="price" id="incPrice">
-            <button onclick="addIncome()">Add Income</button>
-
+            <button onclick="addIncome()">Add Income</button><br><br>
+            <p id="para"></p>
+            Expense Name <input type="text" id="expenseName">
+            <button onclick="verify()">Verify Expense</button><br><br>
             <button onclick="checkBallance()">Check Ballance</button>
         </div>
 
@@ -34,6 +36,11 @@
 <script>
 
     const companyName = localStorage.getItem("activeCompany");
+    const data = JSON.parse(localStorage.getItem(companyName));
+    console.log(companyName);
+    console.log(data);
+    
+    
 
     function logInPage() {
         window.location.href = "Test 19 sep 24.html"
@@ -49,29 +56,21 @@
         const empName = document.getElementById('employeeName').value;
         const pass = document.getElementById('password').value;
 
-        localStorage.setItem(companyName + empName, pass);
+        data.employees[empName] = pass;
+
+        localStorage.setItem(companyName, data);
         divEmployee.style.visibility = "hidden";
     }
 
-    const title = localStorage.getItem(companyName + "expense");
-    const price = localStorage.getItem(title);
-
     const sources = document.getElementById('sources');
+
     function source() {
 
-        if (title.length > 0) {
+        const para = document.createElement('p');
+        para.textContent = JSON.stringify(data.pendingExpenses);
 
-            const para = document.createElement('p');
-            para.textContent = title + "\t" + price;
+        sources.appendChild(para);
 
-            const btn = document.createElement('btn');
-            btn.textContent = "verify";
-            btn.onclick = "verify()"
-
-            sources.appendChild(para);
-            sources.appendChild(btn);
-
-        }
 
         sources.style.visibility = "visible";
         divEmployee.style.visibility = "hidden";
@@ -81,20 +80,29 @@
         const incomeSource = document.getElementById('incomeSource');
         const incPrice = document.getElementById('incPrice');
 
-        localStorage.setItem(companyName + incomeSource, price);
-        localStorage.setItem(companyName + "ballance", localStorage.getItem(companyName + "ballance") + price);
+        data.income[incomeSource] = incPrice;
+        data.ballance += incPrice;
+        localStorage.setItem(companyName, data);
     }
 
     function verify() {
-        localStorage.setItem(companyName + "expense", "");
-        localStorage.setItem(companyName + "ballance", localStorage.getItem(companyName + "ballance") - price);
+        const expName = document.getElementById("expenseName").value;
+        const expPrice = data.pendingExpenses[expName];
+
+        if (expPrice) {
+            data.ballance -= expPrice;
+            data.pendingExpenses[expName] = 0;
+            localStorage.setItem(companyName, data);
+        } else {
+            alert("enter correct expense name.");
+        }
     }
 
 
     function checkBallance() {
 
         const ballancePara = document.createElement('p');
-        ballancePara.textContent = localStorage.getItem(companyName + "ballance");
+        ballancePara.textContent = JSON.stringify(data.ballance);
         sources.appendChild(ballancePara);
     }
 </script>
